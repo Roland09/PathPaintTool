@@ -40,6 +40,8 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
    Paint Brush: Paint by dragging the mouse
    Stroke: Create strokes by placing an anchor point and subsequently create strokes form the previous anchor point.
    *Automatic Waypoint creation and Spline manipulation are in development*
+   
+- Multi Tile Terrain
 
 ## Requirements
 
