@@ -126,3 +126,4 @@ Credit to these providers:
 * Substance Support
 * Additional Terrain Tool support
 * Presets & Quick Access Settings
+* Terrain Backup & Restore, Undo Operation
