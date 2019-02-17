@@ -30,6 +30,12 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
    Stroke: Create strokes by placing an anchor point and subsequently create strokes form the previous anchor point.
    *Automatic Waypoint creation and Spline manipulation are in development*
 
+## Example
+
+Let's see in a video how it looks like:
+
+`[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/K_XxgpzNZxc/0.jpg)](https://www.youtube.com/watch?v=K_XxgpzNZxc)`
+
 ## Integrations
 
  - Vegeation Studio 
