@@ -1,6 +1,7 @@
-License is the same as the original TerrainToolSamples license. Please be aware that Unity is in no way affiliated with this project!
+This is based on the work of Unity, that way the license is the same as the original TerrainToolSamples license. Please be aware that Unity is in no way affiliated with this project!
 
-Original license from https://raw.githubusercontent.com/Unity-Technologies/TerrainToolSamples/master/LICENSE.md
+Original license from 
+https://github.com/Unity-Technologies/TerrainToolSamples/blob/master/LICENSE.md
 ------------------------------------------------------------------------------------------------------------------------
 
 [MyPackageName] copyright © [YEAR] Unity Technologies ApS
