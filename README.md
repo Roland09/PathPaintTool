@@ -38,7 +38,7 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
  - Various Paint Modes
  
    * Paint Brush: Paint by dragging the mouse
-   * Stroke: Create strokes by placing an anchor point and subsequently create strokes form the previous anchor point.
+   * Stroke: Create strokes by placing an anchor point and subsequently create strokes from the previous anchor point.
    * Automatic Waypoint creation and Spline manipulation are in development
    
 - Multi Tile Terrain
@@ -67,7 +67,7 @@ To better visualize it, looks like this:
 
 ![Example](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/stroke-example.jpg)
 
-The yellow circle is the Paint Texture brush, the blue one is the Bridge tool, the grey one is the Smooth tool. There are others optionally available. All of the tools are applied in sequence. To the left in the screenshot is the brush itself, the right disc is the anchor point from where a stroke is painted to the brush location. This is the Stroke paint mode. There is also the Paint Brush mode. At one point the Stroke mode is better suited, at another point the Brush paint mode. Stroke mode is e. g. preferred for longer distances, to paint a path along a mountain side. Or from top of a region to the bottom of a region.
+The yellow circle is the Paint Texture brush, the blue one is the Bridge tool, the grey one is the Smooth tool. There are others optionally available. All of the tools are applied in sequence. To the left in the screenshot is the brush itself, the right disc is the anchor point from where a stroke is painted to the brush location. This is the Stroke paint mode. There is also the Paint Brush mode. At one point the Stroke mode is better suited, at another point the Brush paint mode. Stroke mode is e. g. preferred for longer distances, to paint a path along a mountain side. Or from top of a region to the bottom of a region. I'll create presets depending on feedback.
 
 As of the time of writing this readme file, the inspector looks like this:
 
@@ -84,7 +84,7 @@ So creating e. g. a motocross track was a matter of a minute:
 
 ## Notes
 
-The demo unitypackage is provided to get you started with a tiled and textures terrain. Future updates will be done on the code alone.
+The demo unitypackage is provided to get you started with a tiled and textured terrain. Future updates will be done on the code alone.
 
 ## Important
 
