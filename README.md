@@ -1,6 +1,6 @@
 ## **Path Paint Tool**
 
-Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools. It is a Path Painter which allows you to modify the Unity terrain.
+The Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools. It is a Path Painter which allows you to modify the Unity terrain in order to creat paths.
 
 ## Requirements
 
@@ -15,7 +15,7 @@ Unity 2018.3+
    
 * open the demo scene TerrainToolsDemo/Scenes/Rocky Green Plateaus
 * select a terrain
-* click "paint terrain" -> "Path Paint Tool"
+* click the *Paint Terrain* brush in the inspector of the terrain and select *Path Paint Tool*
 
 Have Fun :-)
 
@@ -25,6 +25,6 @@ The demo unitypackage is provided to get you started with a tiled and textures t
 
 ## Important
 
-The Undo feature is currently in development and not yet fully available. Please backup your terrain before you start modifying it with the Path Paint Tool.
+The Undo feature is currently in development and not fully woring. Please backup your terrain before you start modifying it.
 
 
