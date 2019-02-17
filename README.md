@@ -125,4 +125,4 @@ Credit to these providers:
 * Embankment
 * Substance Support
 * Additional Terrain Tool support
-* Quick Access Settings
+* Presets & Quick Access Settings
