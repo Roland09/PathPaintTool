@@ -25,7 +25,7 @@ Unity 2018.3+
    
 * open the demo scene TerrainToolsDemo/Scenes/Rocky Green Plateaus
 * select a terrain
-* click the *Paint Terrain* brush in the inspector of the terrain and select *Path Paint Tool*
+* click the *Paint Terrain* menu button in the terrain inspector and select *Path Paint Tool*
 
 Have Fun :-)
 
