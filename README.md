@@ -25,6 +25,6 @@ The demo unitypackage is provided to get you started with a tiled and textures t
 
 ## Important
 
-The Undo feature is currently in development and not fully woring. Please backup your terrain before you start modifying it.
+The Undo feature is currently in development and not yet fully available. Please backup your terrain before you start modifying it with the Path Paint Tool.
 
 
