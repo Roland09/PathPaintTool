@@ -2,8 +2,7 @@
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
-[Bb]uilds/
-Assets/AssetStoreTools*
+[Bb]uilds//AssetStoreTools*
 
 # Visual Studio cache directory
 .vs/
@@ -34,4 +33,14 @@ sysinfo.txt
 
 # Builds
 *.apk
-*.unitypackage
+
+*.meta
+
+Backup
+World Creator
+ProjectSettings
+Logs
+Packages
+
+Assets/TerrainTools Demo
+Assets/WorldCreatorSyncTool
