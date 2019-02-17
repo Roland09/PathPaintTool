@@ -37,14 +37,16 @@ This is to get you started quickly. Delta updates on the code will be committed 
 - Supported  Terrain Tools:
 Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
 
- - Paint Modes
-   Paint Brush: Paint by dragging the mouse
-   Stroke: Create strokes by placing an anchor point and subsequently create strokes form the previous anchor point.
-   *Automatic Waypoint creation and Spline manipulation are in development*
+ - Various Paint Modes
+ 
+   * Paint Brush: Paint by dragging the mouse
+   * Stroke: Create strokes by placing an anchor point and subsequently create strokes form the previous anchor point.
+   * Automatic Waypoint creation and Spline manipulation are in development
    
 - Multi Tile Terrain
 - Unity 2019+ Support
 - Vegetation Studio and Vegetation Studio Pro Support
+- Open Source, **FREE** for everyone, no DLL
 
 ## Requirements
 
