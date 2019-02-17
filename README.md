@@ -1,3 +1,4 @@
+
 ## **Path Paint Tool**
 
 The Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools. It is a Path Painter which allows you to modify the Unity terrain.
@@ -42,6 +43,8 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
    *Automatic Waypoint creation and Spline manipulation are in development*
    
 - Multi Tile Terrain
+- Unity 2019+ Support
+- Vegetation Studio and Vegetation Studio Pro Support
 
 ## Requirements
 
@@ -55,4 +58,11 @@ The demo unitypackage is provided to get you started with a tiled and textures t
 
 The Undo feature is currently in development and not fully woring. Please backup your terrain before you start modifying it.
 
+## Roadmap
 
+* Automatic Waypoint finder and shaping the terrain
+* Spline creation, Spline saving and flexible adjustment
+* Embankment
+* Substance Support
+* Additional Terrain Tool support
+* Quick Access Settings
