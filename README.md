@@ -6,11 +6,7 @@ Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools.
 
 Unity 2018.3+
 
-*Quick 
-
-## Setup
-
-:*
+## Quick Setup
 
 * create a new Unity 2018.3 project
 * download and import PathPaintTool-Demo.unitypackage from here:
