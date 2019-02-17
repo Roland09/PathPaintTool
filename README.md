@@ -58,6 +58,26 @@ The demo unitypackage is provided to get you started with a tiled and textures t
 
 The Undo feature is currently in development and not fully woring. Please backup your terrain before you start modifying it.
 
+Credits
+-------------------------------------
+Full credit and a BIG THANK YOU(!!!) to the very skilled and most awesome developers at Unity who provided the Terrain Tool Samples for free for the community.
+
+Demo Scene: 
+
+World Creator 2 with which the creation of the demo terrain was possible within minutes. Most of all thank you to Yanik for providing the base terrain.
+
+The textures for the terrain after importing into Unity are Creative Common textures which are freely available and can be used without restriction. 
+
+Credit to these providers:
+
+* CC0 Textures
+
+	[https://cc0textures.com](https://cc0textures.com)
+
+* cgbookcase
+
+	[https://www.cgbookcase.com](https://www.cgbookcase.com)
+	
 ## Roadmap
 
 * Automatic Waypoint finder and shaping the terrain
