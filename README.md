@@ -29,7 +29,7 @@ Unity 2018.3+
 
 Have Fun :-)
 
-This is to get you started quickly. Delta updates on the code will be committed in this GitHub repository. Just replace the PathPaintTool folder with the latest commit.
+This is to get you started quickly. Delta updates of the code will be committed to this GitHub repository. Just replace the PathPaintTool folder with the latest commit if you get the latest version.
 
 ## Features
 - Supported  Terrain Tools:
@@ -41,15 +41,23 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
    * Stroke: Create strokes by placing an anchor point and subsequently create strokes from the previous anchor point.
    * Automatic Waypoint creation and Spline manipulation are in development
    
+- Create paths, roads, plateaus, ramps, lake and river beds, mountain spurs
+   
 - Multi Tile Terrain
-- Unity 2019+ Support
+
+- Unity 2018+ and 2019+ Support
+
 - Vegetation Studio and Vegetation Studio Pro Support
+
 - Open Source, **FREE** for everyone, no DLL
+
  
 ## Integrations
 
  - Vegeation Studio 
  - Vegetation Studio Pro 
+
+For Vegetation Studio and Vegetation Studio Pro I recommend to use the include and exclude terrain texture rules.
  
 ## The Idea
 
