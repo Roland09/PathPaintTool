@@ -3,7 +3,7 @@
 The Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools. It is a Path Painter which allows you to modify the Unity terrain.
 
 
-## Example
+## Introduction
 
 Let's see in a video how it looks like:
 
