@@ -34,7 +34,7 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
 
 Let's see in a video how it looks like:
 
-`[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/K_XxgpzNZxc/0.jpg)](https://www.youtube.com/watch?v=K_XxgpzNZxc)`
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/K_XxgpzNZxc/0.jpg)](https://www.youtube.com/watch?v=K_XxgpzNZxc)
 
 ## Integrations
 
