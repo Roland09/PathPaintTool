@@ -49,6 +49,11 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
 
  - Vegeation Studio 
  - Vegetation Studio Pro 
+## The Idea
+
+Unity created and provided various tools for terrain manipulation for free. When I studied them I figured that it would make sense to combine them. So I tried and implemented a quick tool which combines varions Terrain Tools in 1 paint stroke. I still have to find the "golden settings" which work for everything, but I guess that's a not so easy task to accomplish. Sometimes you want smoothing, sometimes ridged erosion. So currently - until some feedback is gathered the advanced mode with full flexibility and all the settings available is the one to go.
+
+
 
 ## Notes
 
