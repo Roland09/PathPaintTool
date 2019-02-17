@@ -97,6 +97,10 @@ Here is Vegetation Studio grass and tree removal in action:
 
 ![VsPro](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/vspro.gif)
 
+Mountain advancement
+
+![MountainAdvancement](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/mountain-advance.gif)
+
 
 ## Notes
 
