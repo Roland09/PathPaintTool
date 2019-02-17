@@ -2,6 +2,17 @@
 
 The Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools. It is a Path Painter which allows you to modify the Unity terrain.
 
+
+## Example
+
+Let's see in a video how it looks like:
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/K_XxgpzNZxc/0.jpg)](https://www.youtube.com/watch?v=K_XxgpzNZxc)
+
+## Integrations
+
+ - Vegeation Studio 
+ - Vegetation Studio Pro 
 ## Requirements
 
 Unity 2018.3+
@@ -29,17 +40,6 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
    Paint Brush: Paint by dragging the mouse
    Stroke: Create strokes by placing an anchor point and subsequently create strokes form the previous anchor point.
    *Automatic Waypoint creation and Spline manipulation are in development*
-
-## Example
-
-Let's see in a video how it looks like:
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/K_XxgpzNZxc/0.jpg)](https://www.youtube.com/watch?v=K_XxgpzNZxc)
-
-## Integrations
-
- - Vegeation Studio 
- - Vegetation Studio Pro 
 
 ## Requirements
 
