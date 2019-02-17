@@ -8,7 +8,7 @@ The Path Paint Tool is a free and Open Source extension for the Unity Terrain To
 
 ## Introduction
 
-Let's see in a video how it looks like in action:
+Let's see in a video how it looks like in action, please click on the picture to see the video on youtube:
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/K_XxgpzNZxc/0.jpg)](https://www.youtube.com/watch?v=K_XxgpzNZxc)
  
