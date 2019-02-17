@@ -22,11 +22,22 @@ Have Fun :-)
 This is to get you started quickly. Delta updates on the code will be committed in this GitHub repository.
 
 ## Features
+- Supported  Terrain Tools:
+Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
+
+ - Paint Modes
+   Paint Brush: Paint by dragging the mouse
+   Stroke: Create strokes by placing an anchor point and subsequently create strokes form the previous anchor point.
+   *Automatic Waypoint creation and Spline manipulation are in development*
 
 ## Integrations
 
  - Vegeation Studio 
  - Vegetation Studio Pro 
+
+## Requirements
+
+ - Unity 2018.3+
 
 ## Notes
 
