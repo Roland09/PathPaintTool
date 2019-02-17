@@ -19,6 +19,8 @@ Unity 2018.3+
 
 Have Fun :-)
 
+This is to get you started quickly. Delta updates on the code will be committed in this GitHub repository.
+
 ## Features
 
 ## Integrations
