@@ -1,5 +1,6 @@
 
 
+
 ## **Path Paint Tool**
 
 The Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools. It is a Path Painter which allows you to modify the Unity terrain.
@@ -49,9 +50,24 @@ Any combination of Paint, Bridge, Smooth, Ridge Erosion, Smudge.
 
  - Vegeation Studio 
  - Vegetation Studio Pro 
+ 
 ## The Idea
 
 Unity created and provided various tools for terrain manipulation for free. When I studied them I figured that it would make sense to combine them. So I tried and implemented a quick tool which combines varions Terrain Tools in 1 paint stroke. I still have to find the "golden settings" which work for everything, but I guess that's a not so easy task to accomplish. Sometimes you want smoothing, sometimes ridged erosion. So currently - until some feedback is gathered the advanced mode with full flexibility and all the settings available is the one to go.
+
+So the basic idea is this:  
+  
+Have multiple brushes overlapping, e. g.:
+  
+* inner brush: texture tool  
+* middle brush: bridge tool  
+* outer brush: smooth tool  
+  
+To better visualize it, looks like this:
+
+![Example](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/stroke-example.jpg)
+
+
 
 
 
