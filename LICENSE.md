@@ -24,7 +24,7 @@ https://github.com/Unity-Technologies/TerrainToolSamples/blob/master/LICENSE.md
 
 UNITY COMPANION LICENSE
 
-[MyPackageName] copyright © [YEAR] Unity Technologies ApS
+[MyPackageName] copyright © 2019 Unity Technologies ApS
 
 Licensed under the Unity Companion License for Unity-dependent projects--see [Unity Companion License](http://www.unity3d.com/legal/licenses/Unity_Companion_License). 
 
