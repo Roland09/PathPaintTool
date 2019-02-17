@@ -1,6 +1,6 @@
 ## **Path Paint Tool**
 
-The Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools. It is a Path Painter which allows you to modify the Unity terrain in order to creat paths.
+The Path Paint Tool is a free and Open Source extension for the Unity Terrain Tools. It is a Path Painter which allows you to modify the Unity terrain.
 
 ## Requirements
 
@@ -18,6 +18,13 @@ Unity 2018.3+
 * click the *Paint Terrain* brush in the inspector of the terrain and select *Path Paint Tool*
 
 Have Fun :-)
+
+## Features
+
+## Integrations
+
+ - Vegeation Studio 
+ - Vegetation Studio Pro 
 
 ## Notes
 
