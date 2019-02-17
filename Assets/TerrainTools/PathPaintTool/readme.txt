@@ -11,6 +11,12 @@ All credit to them for their most impressive work.
 
 Basically this Path Paint Tool combines a set of the Terrain Tools in order to paint paths.
 
+License
+-------------------------------------
+
+Since this is based on the TerrainToolSamples provided by Unity, the license is the same as the TerrainToolSamples:
+
+https://github.com/Unity-Technologies/TerrainToolSamples/blob/master/LICENSE.md
 
 Credits
 -------------------------------------
