@@ -89,6 +89,9 @@ So creating e. g. a motocross track was a matter of a minute:
 
 ![FinalScene](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/motocross-track.jpg)
 
+Or here's multi-tile support (the orange line is the split line) in action, including Vegetation Studio Pro grass removal:
+
+![MultiTile](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/multi-tile-with-vspro.gif)
 
 ## Notes
 
