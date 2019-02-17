@@ -69,7 +69,17 @@ To better visualize it, looks like this:
 
 The yellow circle is the Paint Texture brush, the blue one is the Bridge tool, the grey one is the Smooth tool. There are others optionally available. All of the tools are applied in sequence. To the left in the screenshot is the brush itself, the right disc is the anchor point from where a stroke is painted to the brush location. This is the Stroke paint mode. There is also the Paint Brush mode. At one point the Stroke mode is better suited, at another point the Brush paint mode. Stroke mode is e. g. preferred for longer distances, to paint a path along a mountain side. Or from top of a region to the bottom of a region.
 
+As of the time of writing this readme file, the inspector looks like this:
 
+![Inspector](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/inspector.jpg)
+
+The result is a Path Paint Tool which you can see here animated:
+
+![Demo](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/pathpainttool-motocross-track.gif)
+
+So creating e. g. a motocross track was a matter of a minute:
+
+![FinalScene](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/motocross-track.jpg)
 
 
 ## Notes
