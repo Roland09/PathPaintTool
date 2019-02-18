@@ -17,6 +17,7 @@ namespace UnityEditor.Experimental.TerrainAPI
         private ModuleEditor paintModule = new PaintModule();
         private ModuleEditor smudgeModule = new SmudgeModule();
         private ModuleEditor ridgeErodeModule = new RidgeErodeModule();
+        private ModuleEditor heightModule = new HeightModule();
 
         private IPaintMode paintBrushPaintMode = new PaintBrushPaintMode();
         private IPaintMode strokePaintMode = new StrokePaintMode();
@@ -42,6 +43,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             this.modules.Add(paintModule);
             this.modules.Add(bridgeModule);
             this.modules.Add(smoothModule);
+            this.modules.Add(heightModule);
             this.modules.Add(ridgeErodeModule);
             this.modules.Add(smudgeModule);
 
@@ -51,6 +53,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             this.onSceneGuiOrderList.Add(smoothModule);
             this.onSceneGuiOrderList.Add(smudgeModule);
             this.onSceneGuiOrderList.Add(bridgeModule);
+            this.onSceneGuiOrderList.Add(heightModule);
             this.onSceneGuiOrderList.Add(ridgeErodeModule);
             this.onSceneGuiOrderList.Add(paintModule);
 
@@ -58,6 +61,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             paintModule.Active = true;
             bridgeModule.Active = true;
             smoothModule.Active = true;
+            heightModule.Active = false;
             ridgeErodeModule.Active = false;
             smudgeModule.Active = false;
 
@@ -67,6 +71,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             this.paintSegmentOrderList.Add(bridgeModule);
             this.paintSegmentOrderList.Add(smoothModule);
             this.paintSegmentOrderList.Add(smudgeModule);
+            this.paintSegmentOrderList.Add(heightModule);
             this.paintSegmentOrderList.Add(ridgeErodeModule);
             this.paintSegmentOrderList.Add(paintModule);
 
@@ -224,6 +229,11 @@ namespace UnityEditor.Experimental.TerrainAPI
 
                     GUILayout.BeginVertical("box");
                     {
+                        if (module.GetDescription().Length > 0)
+                        {
+                            EditorGUILayout.HelpBox(module.GetDescription(), MessageType.Info);
+                        }
+
                         module.OnInspectorGUI(terrain, editContext);
                     }
                     GUILayout.EndVertical();
