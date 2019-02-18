@@ -21,7 +21,7 @@ Unity 2018.3+
 * create a new Unity 2018.3 project
 * download and import PathPaintTool-Demo.unitypackage from here:
 
-   https://www.dropbox.com/s/l7g5twg1wl9di9r/PathPaintTool-Demo.unitypackage
+   http://bit.ly/PathPaintTool
    
 * open the demo scene TerrainToolsDemo/Scenes/Rocky Green Plateaus
 * select a terrain (it's multi-tile terrain for your checking-this-out preferences :-)
@@ -73,33 +73,33 @@ Have multiple brushes overlapping, e. g.:
   
 To better visualize it, looks like this:
 
-![Example](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/stroke-example.jpg)
+![Example](https://user-images.githubusercontent.com/10963432/52947668-af7f6f80-3377-11e9-9d8b-44228f558d73.jpg)
 
 The yellow circle is the Paint Texture brush, the blue one is the Bridge tool, the grey one is the Smooth tool. There are others optionally available. All of the tools are applied in sequence. To the left in the screenshot is the brush itself, the right disc is the anchor point from where a stroke is painted to the brush location. This is the Stroke paint mode. There is also the Paint Brush mode. At one point the Stroke mode is better suited, at another point the Brush paint mode. Stroke mode is e. g. preferred for longer distances, to paint a path along a mountain side. Or from top of a region to the bottom of a region. I'll create presets depending on feedback.
 
 As of the time of writing this readme file, the inspector looks like this:
 
-![Inspector](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/inspector.jpg)
+![Inspector](https://user-images.githubusercontent.com/10963432/52947677-b4442380-3377-11e9-85ae-eaa610b01cfe.jpg)
 
 The result is a Path Paint Tool which you can see here animated:
 
-![Demo](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/pathpainttool-motocross-track.gif)
+![Demo](https://user-images.githubusercontent.com/10963432/52947682-b6a67d80-3377-11e9-81e5-8cb228cded1f.gif)
 
 So creating e. g. a motocross track was a matter of a minute:
 
-![FinalScene](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/motocross-track.jpg)
+![FinalScene](https://user-images.githubusercontent.com/10963432/52947688-bd34f500-3377-11e9-95e3-ccb66971cc20.jpg)
 
 Or here's multi-tile support (the orange line is the split line) in action, including Vegetation Studio Pro grass removal:
 
-![MultiTile](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/multi-tile-with-vspro.gif)
+![MultiTile](https://user-images.githubusercontent.com/10963432/52947920-5f54dd00-3378-11e9-8a43-33c1003f1b2a.gif)
 
 Here is Vegetation Studio grass and tree removal in action:
 
-![VsPro](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/vspro.gif)
+![VsPro](https://user-images.githubusercontent.com/10963432/52947693-c32ad600-3377-11e9-96d9-3640a6b7488d.gif)
 
 Mountain advancement
 
-![MountainAdvancement](https://github.com/Roland09/PathPaintTool/blob/master/Documentation/Screenshots/mountain-advance.gif)
+![MountainAdvancement](https://user-images.githubusercontent.com/10963432/52947699-c8882080-3377-11e9-9e00-3487d493c0b8.gif)
 
 
 ## Notes
