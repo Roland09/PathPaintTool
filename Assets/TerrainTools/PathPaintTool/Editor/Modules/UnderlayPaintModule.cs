@@ -60,7 +60,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
         {
-            innerLayerIndex = LayerUtilities.ShowTerrainLayersSelection("Paint", terrain, innerLayerIndex);
+            innerLayerIndex = LayerUtilities.ShowTerrainLayersSelection("Underlay", terrain, innerLayerIndex);
             m_SelectedInnerTerrainLayer = LayerUtilities.FindTerrainLayer(terrain, innerLayerIndex);
 
             paintBrushSize = EditorGUILayout.Slider(new GUIContent("Brush Size [% of Main Brush]", ""), paintBrushSize, 0.0f, 200.0f);
