@@ -39,6 +39,10 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         private DelayedActionHandler delayedActionHandler;
 
+        private PathRecorder pathRecorder;
+
+        private bool pathRecorderEnabled = true;
+
         public PathPaintTool()
         {
             #region Modules
@@ -101,6 +105,12 @@ namespace UnityEditor.Experimental.TerrainAPI
             this.delayedActionHandler.AddDelayedAction( new DelayedAction( this));
 
             #endregion Delayed Action
+
+            #region PathRecorder
+
+            pathRecorder = new PathRecorder();
+
+            #endregion PathRecorder
         }
 
         public override string GetName()
@@ -115,6 +125,12 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         public override void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
         {
+            if (currentTerrain == null || editContext == null)
+                return;
+
+            ///
+            /// Handle Input
+            ///
             Event evt = Event.current;
             int controlId = GUIUtility.GetControlID(s_TerrainEditorHash, FocusType.Passive);
             switch (evt.GetTypeForControl(controlId))
@@ -124,19 +140,58 @@ namespace UnityEditor.Experimental.TerrainAPI
                     break;
 
                 case EventType.MouseDown:
-                    delayedActionHandler.StartDelayedActions();
+
+                    if (evt.button == 0 && evt.isMouse)
+                    {
+                        #region Delayed Action
+
+                        delayedActionHandler.StartDelayedActions();
+
+                        #endregion Delayed Action
+
+
+                        #region PathRecorder
+                        if (pathRecorderEnabled)
+                        {
+                            // reset path
+                            pathRecorder.StartRecording();
+
+                        }
+                        #endregion PathRecorder
+                    }
+
                     break;
 
                 case EventType.MouseUp:
-                    delayedActionHandler.ApplyAllDelayedActions();
+
+                    if (evt.button == 0 && evt.isMouse)
+                    {
+                        #region Delayed Action
+
+                        delayedActionHandler.ApplyAllDelayedActions();
+
+                        #endregion Delayed Action
+
+                    }
+                    break;
+
+                case EventType.MouseDrag:
+                    if (evt.button == 0 && evt.isMouse)
+                    {
+                        #region PathRecorder
+                        if (pathRecorderEnabled)
+                        {
+                            // record path while dragging
+                            pathRecorder.AddPosition(editContext.raycastHit.point);
+
+                        }
+                        #endregion PathRecorder
+                    }
                     break;
             }
 
             // We're only doing painting operations, early out if it's not a repaint
             if (Event.current.type != EventType.Repaint)
-                return;
-
-            if (currentTerrain == null || editContext == null)
                 return;
 
             #region PaintMode
@@ -157,6 +212,16 @@ namespace UnityEditor.Experimental.TerrainAPI
 
             #endregion Modules
 
+            #region PathRecorder
+
+            if (pathRecorderEnabled)
+            {
+                // paint recorded path
+                List<Vector3> positions = pathRecorder.GetPositions();
+                Handles.DrawAAPolyLine(4, positions.ToArray());
+            }
+
+            #endregion PathRecorder
 
 
         }
@@ -273,11 +338,28 @@ namespace UnityEditor.Experimental.TerrainAPI
                     GUILayout.EndVertical();
                 }
                 #endregion Integrations
-            }
 
+                #region Debug
+
+                GUILayout.BeginVertical("box");
+                {
+
+                    EditorGUILayout.LabelField(PathPaintStyles.debugContent, EditorStyles.boldLabel);
+
+                    pathRecorderEnabled = EditorGUILayout.Toggle("Show Path", pathRecorderEnabled);
+
+                }
+                GUILayout.EndVertical();
+                #endregion Debug
+
+            }
             if (EditorGUI.EndChangeCheck())
             {
                 Save(true);
+
+                // update scene view, otherwise eg changing the "show path" option wouldn't be visualized immediately
+                SceneView.RepaintAll();
+
             }
 
             base.OnInspectorGUI(terrain, editContext);

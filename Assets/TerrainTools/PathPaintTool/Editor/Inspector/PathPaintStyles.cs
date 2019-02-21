@@ -8,6 +8,7 @@ namespace UnityEditor.Experimental.TerrainAPI
     {
         public static readonly GUIContent activeTerrainToolsContent = new GUIContent("Terrain Tools", "Active terrain tools which will be applied while the path is being painted");
         public static readonly GUIContent paintModesContent = new GUIContent("Paint Mode", "");
+        public static readonly GUIContent debugContent = new GUIContent("Debug", "");
 
         public static readonly GUIContent anchorRequiredContent = new GUIContent("Please place an anchor on the terrain with shift + click", "");
 
