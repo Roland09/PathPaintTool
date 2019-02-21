@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Experimental.TerrainAPI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UnityEditor.Experimental.TerrainAPI
 {
@@ -12,12 +13,14 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         private List<IPaintMode> paintModes = null;
 
-        private ModuleEditor bridgeModule = new BridgeModule();
-        private ModuleEditor smoothModule = new SmoothModule();
-        private ModuleEditor paintModule = new PaintModule();
-        private ModuleEditor smudgeModule = new SmudgeModule();
-        private ModuleEditor ridgeErodeModule = new RidgeErodeModule();
-        private ModuleEditor heightModule = new HeightModule();
+        //                                                            active,  sceneGuiOrder, paintSegmentOrder
+        private ModuleEditor bridgeModule = new BridgeModule(         true  ,              3,                 1);
+        private ModuleEditor smoothModule = new SmoothModule(         true  ,              1,                 2);
+        private ModuleEditor paintModule = new PaintModule(           true  ,              7,                 7);
+        private ModuleEditor smudgeModule = new SmudgeModule(         false ,              2,                 3);
+        private ModuleEditor ridgeErodeModule = new RidgeErodeModule( false ,              5,                 5);
+        private ModuleEditor heightModule = new HeightModule(         false ,              4,                 4); 
+        private ModuleEditor underlayModule = new UnderlayModule(     false ,              6,                 6);
 
         private IPaintMode paintBrushPaintMode = new PaintBrushPaintMode();
         private IPaintMode strokePaintMode = new StrokePaintMode();
@@ -25,13 +28,16 @@ namespace UnityEditor.Experimental.TerrainAPI
         private IPaintMode waypointPaintMode = new SplinePaintMode();
 
         private IPaintMode paintMode;
-        private int paintModeIndex;
+        private int paintModeIndex; 
 
         private List<AssetIntegration> assetIntegrations = null;
 
         private AssetIntegration vegetationStudioProIntegration = new VegetationStudioProIntegration();
         private AssetIntegration vegetationStudioIntegration = new VegetationStudioIntegration();
 
+        int s_TerrainEditorHash = "TerrainEditor".GetHashCode();
+
+        private DelayedActionHandler delayedActionHandler;
 
         public PathPaintTool()
         {
@@ -46,34 +52,17 @@ namespace UnityEditor.Experimental.TerrainAPI
             this.modules.Add(heightModule);
             this.modules.Add(ridgeErodeModule);
             this.modules.Add(smudgeModule);
+            this.modules.Add(underlayModule);
 
             // sort order in OnSceneGui
             this.onSceneGuiOrderList = new List<ModuleEditor>();
-
-            this.onSceneGuiOrderList.Add(smoothModule);
-            this.onSceneGuiOrderList.Add(smudgeModule);
-            this.onSceneGuiOrderList.Add(bridgeModule);
-            this.onSceneGuiOrderList.Add(heightModule);
-            this.onSceneGuiOrderList.Add(ridgeErodeModule);
-            this.onSceneGuiOrderList.Add(paintModule);
-
-            // set default active states
-            paintModule.Active = true;
-            bridgeModule.Active = true;
-            smoothModule.Active = true;
-            heightModule.Active = false;
-            ridgeErodeModule.Active = false;
-            smudgeModule.Active = false;
+            this.onSceneGuiOrderList.AddRange(this.modules);
+            this.onSceneGuiOrderList = this.modules.OrderBy(x => x.SceneGuiOrder).ToList();
 
             // sort order in paintSegment execution
             this.paintSegmentOrderList = new List<ModuleEditor>();
-
-            this.paintSegmentOrderList.Add(bridgeModule);
-            this.paintSegmentOrderList.Add(smoothModule);
-            this.paintSegmentOrderList.Add(smudgeModule);
-            this.paintSegmentOrderList.Add(heightModule);
-            this.paintSegmentOrderList.Add(ridgeErodeModule);
-            this.paintSegmentOrderList.Add(paintModule);
+            this.paintSegmentOrderList.AddRange(this.modules);
+            this.paintSegmentOrderList = this.modules.OrderBy(x => x.PaintSegmentOrder).ToList();
 
             #endregion Modules
 
@@ -106,6 +95,12 @@ namespace UnityEditor.Experimental.TerrainAPI
                 assetIntegrations.Add(vegetationStudioIntegration);
             }
 
+            #region Delayed Action
+
+            this.delayedActionHandler = new DelayedActionHandler();
+            this.delayedActionHandler.AddDelayedAction( new DelayedAction( this));
+
+            #endregion Delayed Action
         }
 
         public override string GetName()
@@ -120,6 +115,22 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         public override void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
         {
+            Event evt = Event.current;
+            int controlId = GUIUtility.GetControlID(s_TerrainEditorHash, FocusType.Passive);
+            switch (evt.GetTypeForControl(controlId))
+            {
+                case EventType.Layout:
+                    // nothing to do
+                    break;
+
+                case EventType.MouseDown:
+                    delayedActionHandler.StartDelayedActions();
+                    break;
+
+                case EventType.MouseUp:
+                    delayedActionHandler.ApplyAllDelayedActions();
+                    break;
+            }
 
             // We're only doing painting operations, early out if it's not a repaint
             if (Event.current.type != EventType.Repaint)
@@ -269,6 +280,7 @@ namespace UnityEditor.Experimental.TerrainAPI
                 Save(true);
             }
 
+            base.OnInspectorGUI(terrain, editContext);
         }
 
 
@@ -325,10 +337,67 @@ namespace UnityEditor.Experimental.TerrainAPI
                 if (!module.Active)
                     continue;
 
+                #region Delayed Actions
+
+                // skip paintmodule if delayed actions is active, it has to be painted over all other modules
+                if (UseDelayedActions())
+                {
+                    if (module == paintModule)
+                        continue;
+                }
+
+                #endregion Delayed Actions
+
                 module.PaintSegments(segments, editContext);
+            }
+
+            #region Delayed Actions
+
+            if (UseDelayedActions())
+            {
+                // add and apply delayed actions in batches
+                delayedActionHandler.AddDelayedAction(segments, editContext);
+                delayedActionHandler.ApplyDelayedActions();
+            }
+
+            #endregion Delayed Actions
+        }
+
+        #region Delayed Actions
+
+        private bool UseDelayedActions()
+        {
+            return paintModule.Active && underlayModule.Active;
+
+        }
+
+        private class DelayedAction : IDelayedAction
+        {
+            private PathPaintTool parent;
+
+            public DelayedAction(PathPaintTool parent)
+            {
+                this.parent = parent;
+            }
+
+            public void OnActionPerformed(DelayedActionContext actionContext)
+            {
+                foreach (ModuleEditor module in parent.paintSegmentOrderList)
+                {
+                    if (!module.Active)
+                        continue;
+
+                    // apply paintmodule if delayed actions are active, it has to be painted over all other modules
+                    if (module == parent.paintModule)
+                    {
+                        module.PaintSegments(actionContext.segments, actionContext.editContext);
+                    }
+
+                }
             }
         }
 
-    }
+        #endregion Delayed Actions
 
+    }
 }

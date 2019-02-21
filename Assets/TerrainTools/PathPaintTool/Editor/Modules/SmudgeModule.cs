@@ -31,6 +31,10 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         private static Color smudgeBrushColor = new Color(0.5f, 0.7f, 0.5f, 0.8f);
 
+        public SmudgeModule(bool active, int sceneGuiOrder, int paintSegmentOrder) : base(active, sceneGuiOrder, paintSegmentOrder)
+        {
+        }
+
         override public string GetName()
         {
             return "Smudge";

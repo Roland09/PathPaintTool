@@ -6,7 +6,17 @@ namespace UnityEditor.Experimental.TerrainAPI
 {
     public abstract class ModuleEditor
     {
+
+        public ModuleEditor(bool active, int sceneGuiOrder, int paintSegmentOrder)
+        {
+            this.Active = active;
+            this.SceneGuiOrder = sceneGuiOrder;
+            this.PaintSegmentOrder = paintSegmentOrder;
+        }
+
         public bool Active { get; set; }
+        public int SceneGuiOrder { get; set; }
+        public int PaintSegmentOrder { get; set; }
 
         public abstract string GetName();
 

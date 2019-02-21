@@ -30,7 +30,11 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         #endregion Fields
 
-        private Color bridgeBrushColor = new Color(0.5f, 0.5f, 1.0f, 1.0f);
+        private Color bridgeBrushColor = new Color(0.6f, 0.6f, 1.0f, 1.0f);
+
+        public BridgeModule(bool active, int sceneGuiOrder, int paintSegmentOrder) : base(active, sceneGuiOrder, paintSegmentOrder)
+        {
+        }
 
         override public string GetName()
         {

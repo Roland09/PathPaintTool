@@ -37,6 +37,9 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         private static Color ridgeErodeBrushColor = new Color(1.0f, 0.7f, 0.5f, 0.2f);
 
+        public RidgeErodeModule(bool active, int sceneGuiOrder, int paintSegmentOrder) : base(active, sceneGuiOrder, paintSegmentOrder)
+        {
+        }
 
         override public string GetName()
         {

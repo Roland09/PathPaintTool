@@ -15,11 +15,15 @@ namespace UnityEditor.Experimental.TerrainAPI
         float heightBrushSize = 100f;
 
         [SerializeField]
-        float heightBrushStrength = 40f;
+        float heightBrushStrength = 80f;
 
         #endregion Fields
 
         private static Color heightBrushColor = new Color(1.0f, 1.0f, 0.4f, 0.3f);
+
+        public HeightModule(bool active, int sceneGuiOrder, int paintSegmentOrder) : base(active, sceneGuiOrder, paintSegmentOrder)
+        {
+        }
 
         override public string GetName()
         {

@@ -31,3 +31,23 @@ Credit to these providers:
 * cgbookcase.com
 
 	https://www.cgbookcase.com
+
+Version History
+-------------------------------------
+* 0.02
+
+  + Added Underlay: Paint underlay texture below the main texture. 
+    This is currently done via a delayed action, otherwise the brush of the underlay texture would paint over the main texture while dragging.
+  
+  + Preparation for Post Processing via Delayed Action
+
+  + Changed default brush strengths
+
+  + Added constructor for modules so that they have to be setup only at 2 places: the instantiation and the module list. The ordered lists are generated via the order number.
+
+  + Moved style class to inspector folder
+
+
+* 0.01 
+
+  + Initial release

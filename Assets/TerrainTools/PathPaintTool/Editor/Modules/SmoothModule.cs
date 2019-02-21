@@ -20,6 +20,10 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         private static Color smoothBrushColor = new Color(0.5f, 0.5f, 0.5f, 0.8f);
 
+        public SmoothModule( bool active, int sceneGuiOrder, int paintSegmentOrder) : base(active, sceneGuiOrder, paintSegmentOrder)
+        {
+        }
+
         override public string GetName()
         {
             return "Smooth";

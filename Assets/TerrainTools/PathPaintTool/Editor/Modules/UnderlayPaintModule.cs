@@ -6,7 +6,7 @@ using UnityEngine.Experimental.TerrainAPI;
 
 namespace UnityEditor.Experimental.TerrainAPI
 {
-    public class PaintModule : ModuleEditor
+    public class UnderlayModule : ModuleEditor
     {
         #region Fields
 
@@ -17,22 +17,22 @@ namespace UnityEditor.Experimental.TerrainAPI
         int innerLayerIndex = -1;
 
         [SerializeField]
-        float paintBrushSize = 80f;
+        float paintBrushSize = 140f;
 
         [SerializeField]
         float paintBrushStrength = 100;
 
         #endregion Fields
 
-        private Color paintBrushColor = new Color(1, 1, 0, 0.5f);
+        private Color paintBrushColor = new Color(1.0f, 0.6f, 0, 0.6f);
 
-        public PaintModule(bool active, int sceneGuiOrder, int paintSegmentOrder) : base(active, sceneGuiOrder, paintSegmentOrder)
+        public UnderlayModule(bool active, int sceneGuiOrder, int paintSegmentOrder) : base(active, sceneGuiOrder, paintSegmentOrder)
         {
         }
 
         override public string GetName()
         {
-            return "Paint";
+            return "Underlay";
         }
 
         override public string GetDescription()
