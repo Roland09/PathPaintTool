@@ -17,20 +17,20 @@ namespace UnityEditor.Experimental.TerrainAPI
             return "";
         }
 
-        public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
+        public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContex, BrushSettings brushSettingst)
         {
             EditorGUILayout.LabelField("Waypoint", EditorStyles.boldLabel);
 
             EditorGUILayout.HelpBox(PathPaintStyles.notImplemented.text, MessageType.Error);
         }
 
-        public StrokeSegment[] OnPaint(Terrain terrain, IOnPaint editContext)
+        public StrokeSegment[] OnPaint(Terrain terrain, IOnPaint editContext, BrushSettings brushSettings)
         {
             // TODO implement feature
             return null;
         }
 
-        public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
+        public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings)
         {
             // TODO implement feature
         }

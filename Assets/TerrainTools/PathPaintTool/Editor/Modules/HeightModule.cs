@@ -36,16 +36,16 @@ namespace UnityEditor.Experimental.TerrainAPI
         }
 
 
-        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
+        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings)
         {
             if (editContext.hitValidTerrain)
             {
                 Terrain terrain = currentTerrain;
 
                 // the smooth brush size is relative to the main brush size
-                float brushSize = editContext.brushSize * heightBrushSize / 100f;
+                float brushSize = brushSettings.brushSize * heightBrushSize / 100f;
 
-                BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, 0.0f);
+                BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, brushSettings.brushRotationDegrees);
                 PaintContext ctx = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds(), 1);
                 Material brushPreviewMat = BrushUtilities.GetDefaultBrushPreviewMaterial();
                 brushPreviewMat.color = heightBrushColor;
@@ -54,7 +54,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             }
         }
 
-        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
+        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings)
         {
             EditorGUILayout.LabelField("Height", EditorStyles.boldLabel);
 
@@ -63,24 +63,24 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         }
 
-        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext)
+        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings)
         {
             for (int i = 0; i < segments.Length; i++)
             {
 
                 StrokeSegment segment = segments[i];
 
-                Height(segment.currTerrain, editContext, segment.currUV, segment.prevUV);
+                Height(segment.currTerrain, editContext, segment.currUV, segment.prevUV, brushSettings);
             }
         }
 
 
-        private bool Height(Terrain terrain, IOnPaint editContext, Vector2 currUV, Vector2 prevUV)
+        private bool Height(Terrain terrain, IOnPaint editContext, Vector2 currUV, Vector2 prevUV, BrushSettings brushSettings)
         {
             // the brush size is relative to the main brush size
-            float brushSize = editContext.brushSize * heightBrushSize / 100f;
+            float brushSize = brushSettings.brushSize * heightBrushSize / 100f;
 
-            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, currUV, brushSize, 0.0f);
+            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, currUV, brushSize, brushSettings.brushRotationDegrees);
             PaintContext paintContext = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds(), 1);
 
             paintContext.sourceRenderTexture.filterMode = FilterMode.Bilinear;

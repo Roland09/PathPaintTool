@@ -34,6 +34,12 @@ Credit to these providers:
 
 Version History
 -------------------------------------
+* 0.03
+  
+  custom brush:
+  + resize: ctrl + mouse drag left/right
+  + rotation: ctrl + mouse wheel
+
 * 0.02
 
   + Added Underlay: Paint underlay texture below the main texture. 

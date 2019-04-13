@@ -40,16 +40,16 @@ namespace UnityEditor.Experimental.TerrainAPI
             return "";
         }
 
-        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
+        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings)
         {
             if (editContext.hitValidTerrain)
             {
                 Terrain terrain = currentTerrain;
 
                 // the smooth brush size is relative to the main brush size
-                float brushSize = editContext.brushSize * paintBrushSize / 100f;
+                float brushSize = brushSettings.brushSize * paintBrushSize / 100f;
 
-                BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, 0.0f);
+                BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, brushSettings.brushRotationDegrees);
                 PaintContext ctx = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds(), 1);
                 Material brushPreviewMat = BrushUtilities.GetDefaultBrushPreviewMaterial();
                 brushPreviewMat.color = paintBrushColor;
@@ -58,7 +58,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             }
         }
 
-        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
+        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings)
         {
             innerLayerIndex = LayerUtilities.ShowTerrainLayersSelection("Paint", terrain, innerLayerIndex);
             m_SelectedInnerTerrainLayer = LayerUtilities.FindTerrainLayer(terrain, innerLayerIndex);
@@ -77,22 +77,22 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         }
 
-        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext)
+        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings)
         {
             for (int i = 0; i < segments.Length; i++)
             {
                 StrokeSegment segment = segments[i];
 
-                PaintTexture(segment.currTerrain, editContext, segment.currUV);
+                PaintTexture(segment.currTerrain, editContext, segment.currUV, brushSettings);
             }
         }
 
-        private bool PaintTexture(Terrain terrain, IOnPaint editContext, Vector2 currUV)
+        private bool PaintTexture(Terrain terrain, IOnPaint editContext, Vector2 currUV, BrushSettings brushSettings)
         {
             // the brush size is relative to the main brush size
-            float brushSize = editContext.brushSize * paintBrushSize / 100f;
+            float brushSize = brushSettings.brushSize * paintBrushSize / 100f;
 
-            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, currUV, brushSize, 0.0f);
+            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, currUV, brushSize, brushSettings.brushRotationDegrees);
             PaintContext paintContext = TerrainPaintUtility.BeginPaintTexture(terrain, brushXform.GetBrushXYBounds(), m_SelectedInnerTerrainLayer);
 
             if (paintContext == null)

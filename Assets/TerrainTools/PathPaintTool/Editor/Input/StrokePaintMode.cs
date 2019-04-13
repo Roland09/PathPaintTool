@@ -30,14 +30,14 @@ namespace UnityEditor.Experimental.TerrainAPI
             return "";
         }
 
-        public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
+        public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings)
         {
             if (m_StartTerrain != null && m_StartPoint != null)
             {
                 // anchor is placed on the start terrain, independent of the active one; needed for multi-tiles
                 Terrain terrain = m_StartTerrain;
 
-                BrushTransform anchorBrushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, m_StartPoint, editContext.brushSize, 0.0f);
+                BrushTransform anchorBrushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, m_StartPoint, brushSettings.brushSize, brushSettings.brushRotationDegrees);
                 PaintContext anchorCtx = TerrainPaintUtility.BeginPaintHeightmap(terrain, anchorBrushXform.GetBrushXYBounds(), 1);
                 Material brushPreviewMat = BrushUtilities.GetDefaultBrushPreviewMaterial();
                 brushPreviewMat.color = anchorBrushColor;
@@ -50,7 +50,7 @@ namespace UnityEditor.Experimental.TerrainAPI
         #endregion Anchor
 
 
-        public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
+        public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings)
         {
             EditorGUILayout.LabelField("Stroke", EditorStyles.boldLabel);
 
@@ -67,7 +67,7 @@ namespace UnityEditor.Experimental.TerrainAPI
         }
 
 
-        public StrokeSegment[] OnPaint(Terrain terrain, IOnPaint editContext)
+        public StrokeSegment[] OnPaint(Terrain terrain, IOnPaint editContext, BrushSettings brushSettings)
         {
 
             //grab the starting position & height
@@ -83,7 +83,7 @@ namespace UnityEditor.Experimental.TerrainAPI
                 return null;
             }
 
-            StrokeSegment[] segments = GetStrokeSegments(terrain, editContext);
+            StrokeSegment[] segments = GetStrokeSegments(terrain, editContext, brushSettings);
 
             // next start position
             UpdateStartPosition(terrain, editContext);
@@ -111,7 +111,7 @@ namespace UnityEditor.Experimental.TerrainAPI
         #endregion Input
 
 
-        private StrokeSegment[] GetStrokeSegments(Terrain terrain, IOnPaint editContext)
+        private StrokeSegment[] GetStrokeSegments(Terrain terrain, IOnPaint editContext, BrushSettings brushSettings)
         {
 
             Vector2 uv = editContext.uv;

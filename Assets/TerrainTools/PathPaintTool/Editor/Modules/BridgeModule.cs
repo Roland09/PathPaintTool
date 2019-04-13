@@ -46,13 +46,13 @@ namespace UnityEditor.Experimental.TerrainAPI
             return "";
         }
 
-        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
+        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings)
         {
             
             Terrain terrain = currentTerrain;
-            float brushSize = editContext.brushSize;
+            float brushSize = brushSettings.brushSize;
 
-            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, 0.0f);
+            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, brushSettings.brushRotationDegrees);
             PaintContext ctx = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds(), 1);
             Material brushPreviewMat = BrushUtilities.GetDefaultBrushPreviewMaterial();
             brushPreviewMat.color = bridgeBrushColor;
@@ -61,7 +61,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         }
 
-        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
+        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings)
         {
             EditorGUILayout.LabelField("Bridge", EditorStyles.boldLabel);
 
@@ -74,27 +74,27 @@ namespace UnityEditor.Experimental.TerrainAPI
 
 
 
-        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext)
+        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings)
         {
             for (int i = 0; i < segments.Length; i++)
             {
                 StrokeSegment segment = segments[i];
 
-                Bridge(segment.currTerrain, editContext, segment.currUV, segment.pct, segment.stroke, segment.startPoint);
+                Bridge(segment.currTerrain, editContext, segment.currUV, segment.pct, segment.stroke, segment.startPoint, brushSettings);
 
             }
         }
 
-        private bool Bridge(Terrain terrain, IOnPaint editContext, Vector2 currUV, float pct, Vector3 stroke, Vector3 startPoint)
+        private bool Bridge(Terrain terrain, IOnPaint editContext, Vector2 currUV, float pct, Vector3 stroke, Vector3 startPoint, BrushSettings brushSettings)
         {
             float heightOffset = heightProfile.Evaluate(pct) / terrain.terrainData.size.y;
             float strengthScale = strengthProfile.Evaluate(pct);
             float widthScale = widthProfile.Evaluate(pct);
 
             float finalHeight = ( startPoint + pct * stroke).z + heightOffset;
-            int finalBrushSize = (int)(widthScale * (float)editContext.brushSize);
+            int finalBrushSize = (int)(widthScale * (float)brushSettings.brushSize);
 
-            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, currUV, finalBrushSize, 0.0f);
+            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, currUV, finalBrushSize, brushSettings.brushRotationDegrees);
             PaintContext paintContext = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds());
 
             Material mat = GetMaterial();
@@ -102,7 +102,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 
             mat.SetTexture("_BrushTex", editContext.brushTexture);
 
-            brushParams.x = editContext.brushStrength * strengthScale;
+            brushParams.x = brushSettings.brushStrength * strengthScale;
             brushParams.y = 0.5f * finalHeight;
 
             mat.SetVector("_BrushParams", brushParams);

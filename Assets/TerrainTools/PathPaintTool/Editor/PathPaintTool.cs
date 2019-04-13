@@ -43,6 +43,22 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         private bool pathRecorderEnabled = true;
 
+        #region BrushSettings
+
+        private const float kHeightmapBrushScale = 0.01F;
+        private const float kMinBrushStrength = (1.1F / ushort.MaxValue) / kHeightmapBrushScale;
+
+        private bool showBrushSize = true;
+        private bool showBrushStrength = true;
+        private bool showBrushRotation = true;
+        
+        BrushSettings brushSettings = new BrushSettings();
+
+        // flag if the brush is currently being resized and not moved
+        bool isBrushResizing = false;
+
+        #endregion BrushSettings
+
         public PathPaintTool()
         {
             #region Modules
@@ -190,13 +206,50 @@ namespace UnityEditor.Experimental.TerrainAPI
                     break;
             }
 
+            // handle brush rotation
+            if (evt.control && evt.type == EventType.ScrollWheel)
+            {
+                brushSettings.brushRotationDegrees += Event.current.delta.y;
+
+                if( brushSettings.brushRotationDegrees >= 360)
+                {
+                    brushSettings.brushRotationDegrees -= 360;
+                }
+
+                if (brushSettings.brushRotationDegrees < 0)
+                {
+                    brushSettings.brushRotationDegrees += 360;
+                }
+
+                brushSettings.brushRotationDegrees %= 360;
+
+                evt.Use();
+                editContext.Repaint();
+            }
+
+            // handle brush resize
+            if (evt.control && (evt.type == EventType.MouseDrag))
+            {
+
+                brushSettings.brushSize += Event.current.delta.x;
+
+                isBrushResizing = true;
+
+                evt.Use();
+                editContext.Repaint();
+            }
+            else if (evt.type == EventType.MouseUp)
+            {
+                isBrushResizing = false;
+            }
+
             // We're only doing painting operations, early out if it's not a repaint
             if (Event.current.type != EventType.Repaint)
                 return;
 
             #region PaintMode
 
-            paintMode.OnSceneGUI(currentTerrain, editContext);
+            paintMode.OnSceneGUI(currentTerrain, editContext, brushSettings);
 
             #endregion PaintMode
 
@@ -207,7 +260,7 @@ namespace UnityEditor.Experimental.TerrainAPI
                 if (!module.Active)
                     continue;
 
-                module.OnSceneGUI(currentTerrain, editContext);
+                module.OnSceneGUI(currentTerrain, editContext, brushSettings);
             }
 
             #endregion Modules
@@ -288,7 +341,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 
                 GUILayout.BeginVertical("box");
                 {
-                    paintMode.OnInspectorGUI(terrain, editContext);
+                    paintMode.OnInspectorGUI(terrain, editContext, brushSettings);
                 }
                 GUILayout.EndVertical();
 
@@ -310,7 +363,7 @@ namespace UnityEditor.Experimental.TerrainAPI
                             EditorGUILayout.HelpBox(module.GetDescription(), MessageType.Info);
                         }
 
-                        module.OnInspectorGUI(terrain, editContext);
+                        module.OnInspectorGUI(terrain, editContext, brushSettings);
                     }
                     GUILayout.EndVertical();
                 }
@@ -322,7 +375,35 @@ namespace UnityEditor.Experimental.TerrainAPI
 
                 GUILayout.BeginVertical("box");
                 {
-                    editContext.ShowBrushesGUI(0);
+                    // editContext.ShowBrushesGUI(0);
+
+                    #region BrushSettings
+
+                    // show the brush templates
+                    editContext.ShowBrushesGUI(0, BrushGUIEditFlags.Select);
+
+                    // info
+                    EditorGUILayout.HelpBox(PathPaintStyles.brushSettingsHelp.text, MessageType.None);
+
+                    if (showBrushSize)
+                    {
+                        float safetyFactorHack = 0.9375f;
+                        brushSettings.brushSize = EditorGUILayout.Slider(PathPaintStyles.brushSizeStyle, brushSettings.brushSize, 0.1f, Mathf.Round(Mathf.Min(terrain.terrainData.size.x, terrain.terrainData.size.z) * safetyFactorHack));
+                    }
+
+                    if (showBrushStrength)
+                    {
+                        brushSettings.brushStrength = PercentSlider(PathPaintStyles.brushOpacityStyle, brushSettings.brushStrength, kMinBrushStrength, 1); // former string formatting: "0.0%"
+                    }
+
+                    if( showBrushRotation)
+                    {
+                        brushSettings.brushRotationDegrees = EditorGUILayout.Slider(PathPaintStyles.brushRotationStyle, brushSettings.brushRotationDegrees, 0, 359);
+                        brushSettings.brushRotationDegrees = brushSettings.brushRotationDegrees % 360;
+                    }
+
+                    #endregion BrushSettings
+
                 }
                 GUILayout.EndVertical();
 
@@ -370,7 +451,7 @@ namespace UnityEditor.Experimental.TerrainAPI
         public override bool OnPaint(Terrain terrain, IOnPaint editContext)
         {
 
-            StrokeSegment[]  segments = paintMode.OnPaint(terrain, editContext);
+            StrokeSegment[]  segments = paintMode.OnPaint(terrain, editContext, brushSettings);
 
             // abort if we have nothing to paint
             if (segments == null)
@@ -430,7 +511,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 
                 #endregion Delayed Actions
 
-                module.PaintSegments(segments, editContext);
+                module.PaintSegments(segments, editContext, brushSettings);
             }
 
             #region Delayed Actions
@@ -438,7 +519,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             if (UseDelayedActions())
             {
                 // add and apply delayed actions in batches
-                delayedActionHandler.AddDelayedAction(segments, editContext);
+                delayedActionHandler.AddDelayedAction(segments, editContext, brushSettings);
                 delayedActionHandler.ApplyDelayedActions();
             }
 
@@ -472,7 +553,7 @@ namespace UnityEditor.Experimental.TerrainAPI
                     // apply paintmodule if delayed actions are active, it has to be painted over all other modules
                     if (module == parent.paintModule)
                     {
-                        module.PaintSegments(actionContext.segments, actionContext.editContext);
+                        module.PaintSegments(actionContext.segments, actionContext.editContext, actionContext.brushSettings);
                     }
 
                 }
@@ -481,5 +562,18 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         #endregion Delayed Actions
 
+        #region BrushSettings
+        static float PercentSlider(GUIContent content, float valueInPercent, float minVal, float maxVal)
+        {
+            EditorGUI.BeginChangeCheck();
+            float v = EditorGUILayout.Slider(content, Mathf.Round(valueInPercent * 100f), minVal * 100f, maxVal * 100f);
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                return v / 100f;
+            }
+            return valueInPercent;
+        }
+        #endregion BrushSettings
     }
 }

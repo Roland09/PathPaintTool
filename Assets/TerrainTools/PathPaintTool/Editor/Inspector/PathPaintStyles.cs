@@ -6,6 +6,14 @@ namespace UnityEditor.Experimental.TerrainAPI
 {
     public class PathPaintStyles
     {
+        #region BrushSettings
+        public static readonly GUIContent brushSizeStyle = EditorGUIUtility.TrTextContent("Brush Size", "Size of the brush used to paint.");
+        public static readonly GUIContent brushOpacityStyle = EditorGUIUtility.TrTextContent("Opacity", "Strength of the applied effect.");
+        public static readonly GUIContent brushRotationStyle = EditorGUIUtility.TrTextContent("Rotation", "Rotation in Degrees");
+
+        public static readonly GUIContent brushSettingsHelp = new GUIContent("Resize: CTRL + Mouse Drag Left / Right\nRotate: CTRL + Mouse Wheel");
+        #endregion BrushSettings
+
         public static readonly GUIContent activeTerrainToolsContent = new GUIContent("Terrain Tools", "Active terrain tools which will be applied while the path is being painted");
         public static readonly GUIContent paintModesContent = new GUIContent("Paint Mode", "");
         public static readonly GUIContent debugContent = new GUIContent("Debug", "");

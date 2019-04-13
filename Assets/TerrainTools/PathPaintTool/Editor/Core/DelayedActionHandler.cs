@@ -21,9 +21,9 @@ namespace UnityEditor.Experimental.TerrainAPI
             actionList.Add(action);
         }
 
-        public void AddDelayedAction(StrokeSegment[] segments, IOnPaint editContext)
+        public void AddDelayedAction(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings)
         {
-            actionContextList.Add(new DelayedActionContext(segments, editContext));
+            actionContextList.Add(new DelayedActionContext(segments, editContext, brushSettings));
         }
 
         public void StartDelayedActions()

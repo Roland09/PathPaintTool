@@ -32,11 +32,11 @@ namespace UnityEditor.Experimental.TerrainAPI
             return "";
         }
 
-        public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
+        public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings)
         {
         }
 
-        public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
+        public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings)
         {
             EditorGUILayout.LabelField("Paint Brush", EditorStyles.boldLabel);
 
@@ -45,7 +45,7 @@ namespace UnityEditor.Experimental.TerrainAPI
         }
 
 
-        public StrokeSegment[] OnPaint(Terrain terrain, IOnPaint editContext)
+        public StrokeSegment[] OnPaint(Terrain terrain, IOnPaint editContext, BrushSettings brushSettings)
         {
 
             if (Event.current.type == EventType.MouseDown)
@@ -78,7 +78,7 @@ namespace UnityEditor.Experimental.TerrainAPI
                 // TODO: collect positions and perform modifications in a batch in the background
                 if (paintDirection.magnitude > 1) // 1 just a "magic number" for now; see also  int numSplats = 1;
                 {
-                    segments = GetStrokeSegments(terrain, editContext);
+                    segments = GetStrokeSegments(terrain, editContext, brushSettings);
 
                     // next start position
                     UpdateStartPosition(terrain, editContext);
@@ -111,7 +111,7 @@ namespace UnityEditor.Experimental.TerrainAPI
         #endregion Input
 
 
-        private StrokeSegment[] GetStrokeSegments(Terrain terrain, IOnPaint editContext)
+        private StrokeSegment[] GetStrokeSegments(Terrain terrain, IOnPaint editContext, BrushSettings brushSettings)
         {
 
             Vector2 uv = editContext.uv;

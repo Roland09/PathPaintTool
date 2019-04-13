@@ -52,16 +52,16 @@ namespace UnityEditor.Experimental.TerrainAPI
         }
 
 
-        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
+        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings)
         {
             if (editContext.hitValidTerrain)
             {
                 Terrain terrain = currentTerrain;
 
                 // the smooth brush size is relative to the main brush size
-                float brushSize = editContext.brushSize * ridgeErodeBrushSize / 100f;
+                float brushSize = brushSettings.brushSize * ridgeErodeBrushSize / 100f;
 
-                BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, 0.0f);
+                BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, brushSettings.brushRotationDegrees);
                 PaintContext ctx = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds(), 1);
                 Material brushPreviewMat = BrushUtilities.GetDefaultBrushPreviewMaterial();
                 brushPreviewMat.color = ridgeErodeBrushColor;
@@ -70,7 +70,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             }
         }
 
-        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
+        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings)
         {
             EditorGUILayout.LabelField("Ridge Erode", EditorStyles.boldLabel);
 
@@ -81,24 +81,24 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         }
 
-        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext)
+        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings)
         {
             for (int i = 0; i < segments.Length; i++)
             {
 
                 StrokeSegment segment = segments[i];
 
-                Smudge(segment.currTerrain, editContext, segment.currUV, segment.prevUV);
+                Smudge(segment.currTerrain, editContext, segment.currUV, segment.prevUV, brushSettings);
             }
         }
 
 
-        private bool Smudge(Terrain terrain, IOnPaint editContext, Vector2 currUV, Vector2 prevUV)
+        private bool Smudge(Terrain terrain, IOnPaint editContext, Vector2 currUV, Vector2 prevUV, BrushSettings brushSettings)
         {
             // the brush size is relative to the main brush size
-            float brushSize = editContext.brushSize * ridgeErodeBrushSize / 100f;
+            float brushSize = brushSettings.brushSize * ridgeErodeBrushSize / 100f;
 
-            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, currUV, brushSize, 0.0f);
+            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, currUV, brushSize, brushSettings.brushRotationDegrees);
             PaintContext paintContext = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds(), 1);
 
             Vector2 smudgeDir = editContext.uv - prevUV;

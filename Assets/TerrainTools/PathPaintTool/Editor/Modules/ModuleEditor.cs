@@ -22,10 +22,10 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         public abstract string GetDescription();
 
-        public abstract void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext);
+        public abstract void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings);
 
-        public abstract void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext);
+        public abstract void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings);
 
-        public abstract void PaintSegments(StrokeSegment[] segments, IOnPaint editContext);
+        public abstract void PaintSegments(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings);
     }
 }

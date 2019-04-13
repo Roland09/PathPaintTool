@@ -11,11 +11,13 @@ namespace UnityEditor.Experimental.TerrainAPI
     {
         public StrokeSegment[] segments;
         public IOnPaint editContext;
+        public BrushSettings brushSettings;
 
-        public DelayedActionContext(StrokeSegment[] segments, IOnPaint editContext)
+        public DelayedActionContext(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings)
         {
             this.segments = segments;
             this.editContext = editContext;
+            this.brushSettings = brushSettings;
         }
     }
 }

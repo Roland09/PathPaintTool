@@ -35,16 +35,16 @@ namespace UnityEditor.Experimental.TerrainAPI
         }
 
 
-        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext)
+        override public void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings)
         {
             if (editContext.hitValidTerrain)
             {
                 Terrain terrain = currentTerrain;
 
                 // the brush size is relative to the main brush size
-                float brushSize = editContext.brushSize * this.smoothBrushSize / 100f;
+                float brushSize = brushSettings.brushSize * this.smoothBrushSize / 100f;
 
-                BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, 0.0f);
+                BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.raycastHit.textureCoord, brushSize, brushSettings.brushRotationDegrees);
                 PaintContext ctx = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds(), 1);
                 Material brushPreviewMat = BrushUtilities.GetDefaultBrushPreviewMaterial();
                 brushPreviewMat.color = smoothBrushColor;
@@ -53,7 +53,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             }
         }
 
-        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
+        override public void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings)
         {
 
             EditorGUILayout.LabelField("Smooth", EditorStyles.boldLabel);
@@ -62,23 +62,23 @@ namespace UnityEditor.Experimental.TerrainAPI
             smoothBrushStrength = EditorGUILayout.Slider(new GUIContent("Brush Strength", ""), smoothBrushStrength, 0.0f, 100.0f);
         }
 
-        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext)
+        override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings)
         {
             for (int i = 0; i < segments.Length; i++)
             {
                 StrokeSegment segment = segments[i];
 
-                Smooth(segment.currTerrain, editContext, segment.currUV);
+                Smooth(segment.currTerrain, editContext, segment.currUV, brushSettings);
 
             }
         }
 
-        private bool Smooth(Terrain terrain, IOnPaint editContext, Vector2 currUV)
+        private bool Smooth(Terrain terrain, IOnPaint editContext, Vector2 currUV, BrushSettings brushSettings)
         {
             // the brush size is relative to the main brush size
-            float brushSize = editContext.brushSize * this.smoothBrushSize / 100f;
+            float brushSize = brushSettings.brushSize * this.smoothBrushSize / 100f;
 
-            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.uv, brushSize, 0.0f);
+            BrushTransform brushXform = TerrainPaintUtility.CalculateBrushTransform(terrain, editContext.uv, brushSize, brushSettings.brushRotationDegrees);
             PaintContext paintContext = TerrainPaintUtility.BeginPaintHeightmap(terrain, brushXform.GetBrushXYBounds());
 
             Material mat = TerrainPaintUtility.GetBuiltinPaintMaterial();

@@ -10,10 +10,10 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         string GetDescription();
 
-        void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext);
+        void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext, BrushSettings brushSettings);
 
-        void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext);
+        void OnSceneGUI(Terrain currentTerrain, IOnSceneGUI editContext, BrushSettings brushSettings);
 
-        StrokeSegment[] OnPaint(Terrain terrain, IOnPaint editContext);
+        StrokeSegment[] OnPaint(Terrain terrain, IOnPaint editContext, BrushSettings brushSettings);
     }
 }
