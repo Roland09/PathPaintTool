@@ -34,6 +34,10 @@ Credit to these providers:
 
 Version History
 -------------------------------------
+* 0.04
+  
+  + bugfix: moved Utilities folder to Editor, otherwise the build wouldn't compile
+
 * 0.03
   
   custom brush:

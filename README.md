@@ -22,7 +22,8 @@ Unity 2018.3+
 * download and import PathPaintTool-Demo.unitypackage from here:
 
    http://bit.ly/PathPaintTool
-   
+
+* update the code using the latest version from github
 * open the demo scene TerrainToolsDemo/Scenes/Rocky Green Plateaus
 * select a terrain (it's multi-tile terrain for your checking-this-out preferences :-)
 * click the *Paint Terrain* menu button in the terrain inspector and select *Path Paint Tool*
