@@ -16,6 +16,9 @@ namespace UnityEditor.Experimental.TerrainAPI
         [SerializeField]
         float smoothBrushStrength = 20;
 
+        [SerializeField]
+        float smoothDirection = 0.0f;     // -1 to 1
+
         #endregion Fields
 
         private static Color smoothBrushColor = new Color(0.5f, 0.5f, 0.5f, 0.8f);
@@ -60,6 +63,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 
             smoothBrushSize = EditorGUILayout.Slider(new GUIContent("Brush Size [% of Main Brush]", ""), smoothBrushSize, 0.0f, 300.0f);
             smoothBrushStrength = EditorGUILayout.Slider(new GUIContent("Brush Strength", ""), smoothBrushStrength, 0.0f, 100.0f);
+            smoothDirection = EditorGUILayout.Slider(new GUIContent("Blur Direction", "Blur only up (1.0), only down (-1.0) or both (0.0)"), smoothDirection, -1.0f, 1.0f);
         }
 
         override public void PaintSegments(StrokeSegment[] segments, IOnPaint editContext, BrushSettings brushSettings)
@@ -86,10 +90,16 @@ namespace UnityEditor.Experimental.TerrainAPI
             float brushStrength = smoothBrushStrength / 100f; // editContext.brushStrength;
 
             // brushStrength = Event.current.shift ? -brushStrength : brushStrength;
+            Vector4 smoothWeights = new Vector4(
+               Mathf.Clamp01(1.0f - Mathf.Abs(smoothDirection)),   // centered
+               Mathf.Clamp01(-smoothDirection),                    // min
+               Mathf.Clamp01(smoothDirection),                     // max
+               0.0f);                                          // unused
 
             Vector4 brushParams = new Vector4(brushStrength, 0.0f, 0.0f, 0.0f);
             mat.SetTexture("_BrushTex", editContext.brushTexture);
             mat.SetVector("_BrushParams", brushParams);
+            mat.SetVector("_SmoothWeights", smoothWeights);
 
             TerrainPaintUtility.SetupTerrainToolMaterialProperties(paintContext, brushXform, mat);
 
