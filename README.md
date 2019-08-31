@@ -14,8 +14,8 @@ Let's see in a video how it looks like in action, please click on the picture to
  
 ## Requirements and Supported Unity Versions
 
-+ [2018.3](https://github.com/Roland09/PathPaintTool/tree/unity-2018.3)
-+ [2019.2](https://github.com/Roland09/PathPaintTool/tree/unity-2019.2)
++ [2018.3+](https://github.com/Roland09/PathPaintTool/tree/unity-2018.3)
++ [2019.2+](https://github.com/Roland09/PathPaintTool/tree/unity-2019.2)
 
 ## Quick Setup
 
