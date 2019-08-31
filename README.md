@@ -14,7 +14,7 @@ Let's see in a video how it looks like in action, please click on the picture to
  
 ## Requirements
 
-Unity 2018.3+
+Unity 2019.2
 
 ## Quick Setup
 
