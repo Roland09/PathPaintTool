@@ -16,6 +16,7 @@ Let's see in a video how it looks like in action, please click on the picture to
 
 + [2018.3+](https://github.com/Roland09/PathPaintTool/tree/unity-2018.3)
 + [2019.2+](https://github.com/Roland09/PathPaintTool/tree/unity-2019.2)
++ [2019.3+](https://github.com/Roland09/PathPaintTool/tree/unity-2019.3)
 
 ## Quick Setup
 
@@ -27,6 +28,7 @@ Let's see in a video how it looks like in action, please click on the picture to
 * update the code using the latest version from github, choose the branch depending on your version of Unity:
   + [2018.3](https://github.com/Roland09/PathPaintTool/tree/unity-2018.3)
   + [2019.2](https://github.com/Roland09/PathPaintTool/tree/unity-2019.2)
+  + [2019.3](https://github.com/Roland09/PathPaintTool/tree/unity-2019.3)
 * open the demo scene TerrainToolsDemo/Scenes/Rocky Green Plateaus
 * select a terrain (it's multi-tile terrain for your checking-this-out preferences :-)
 * click the *Paint Terrain* menu button in the terrain inspector and select *Path Paint Tool*
