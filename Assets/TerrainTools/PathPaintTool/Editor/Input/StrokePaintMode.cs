@@ -41,7 +41,7 @@ namespace UnityEditor.Experimental.TerrainAPI
                 PaintContext anchorCtx = TerrainPaintUtility.BeginPaintHeightmap(terrain, anchorBrushXform.GetBrushXYBounds(), 1);
                 Material brushPreviewMat = BrushUtilities.GetDefaultBrushPreviewMaterial();
                 brushPreviewMat.color = anchorBrushColor;
-                TerrainPaintUtilityEditor.DrawBrushPreview(anchorCtx, TerrainPaintUtilityEditor.BrushPreview.SourceRenderTexture, editContext.brushTexture, anchorBrushXform, brushPreviewMat, 0);
+                BrushUtilities.DrawBrushPreview(anchorCtx, BrushUtilities.BrushPreview.SourceRenderTexture, editContext.brushTexture, anchorBrushXform, brushPreviewMat, 0);
                 TerrainPaintUtility.ReleaseContextResources(anchorCtx);
                 
             }

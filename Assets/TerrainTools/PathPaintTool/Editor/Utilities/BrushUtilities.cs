@@ -91,8 +91,10 @@ namespace UnityEditor.Experimental.TerrainAPI
             Material proceduralMaterial,                    // the material to render with (must support procedural quad-mesh generation)
             int materialPassIndex)                          // the pass to use within the material
         {
-
+            // mod
+            // {
             proceduralMaterial.SetVector("_BrushColor", proceduralMaterial.color);
+            // }
 
             // we want to build a quad mesh, with one vertex for each pixel in the heightmap
             // i.e. a 3x3 heightmap would create a mesh that looks like this:
@@ -107,8 +109,22 @@ namespace UnityEditor.Experimental.TerrainAPI
             int quadsY = heightmapPC.pixelRect.height - 1;
             int vertexCount = quadsX * quadsY * (2 * 3);  // two triangles (2 * 3 vertices) per quad
 
+            // issue: the 'int vertexID' in the shader is often stored in an fp32
+            // which can only represent exact integers up to 16777216 ~== 6 * 1672^2
+            // once we have more than 16777216 vertices, the vertexIDs start skipping odd values, resulting in missing triangles
+            // the solution is to reduce vertex count by halving our mesh resolution before we hit that point
+            const int kMaxFP32Int = 16777216;
+            int vertSkip = 1;
+            while (vertexCount > kMaxFP32Int / 2)   // in practice we want to stay well below 16 million verts, for perf sanity
+            {
+                quadsX = (quadsX + 1) / 2;
+                quadsY = (quadsY + 1) / 2;
+                vertexCount = quadsX * quadsY * (2 * 3);
+                vertSkip *= 2;
+            }
+
             // this is used to tessellate the quad mesh (from within the vertex shader)
-            proceduralMaterial.SetVector("_QuadRez", new Vector4(quadsX, quadsY, vertexCount, 0.0f));
+            proceduralMaterial.SetVector("_QuadRez", new Vector4(quadsX, quadsY, vertexCount, vertSkip));
 
             // paint context pixels to heightmap uv:   uv = (pixels + 0.5) / width
             Texture heightmapTexture = (previewTexture == BrushPreview.SourceRenderTexture) ? heightmapPC.sourceRenderTexture : heightmapPC.destinationRenderTexture;
@@ -128,12 +144,12 @@ namespace UnityEditor.Experimental.TerrainAPI
             // objectPos.y = scaleY * H
             // objectPos.z = scaleZ * pcPixels.y + heightmapRect.yMin * scaleZ
             float scaleX = heightmapPC.pixelSize.x;
-            float scaleY = 2.0f * heightmapPC.originTerrain.terrainData.heightmapScale.y;
+            float scaleY = heightmapPC.heightWorldSpaceSize / PaintContext.kNormalizedHeightScale;
             float scaleZ = heightmapPC.pixelSize.y;
             proceduralMaterial.SetVector("_ObjectPos_PCPixelsX", new Vector4(scaleX, 0.0f, 0.0f, 0.0f));
             proceduralMaterial.SetVector("_ObjectPos_HeightMapSample", new Vector4(0.0f, scaleY, 0.0f, 0.0f));
             proceduralMaterial.SetVector("_ObjectPos_PCPixelsY", new Vector4(0.0f, 0.0f, scaleZ, 0.0f));
-            proceduralMaterial.SetVector("_ObjectPos_Offset", new Vector4(heightmapPC.pixelRect.xMin * scaleX, 0.0f, heightmapPC.pixelRect.yMin * scaleZ, 1.0f));
+            proceduralMaterial.SetVector("_ObjectPos_Offset", new Vector4(heightmapPC.pixelRect.xMin * scaleX, heightmapPC.heightWorldSpaceMin - heightmapPC.originTerrain.GetPosition().y, heightmapPC.pixelRect.yMin * scaleZ, 1.0f));
 
             // heightmap paint context pixels to brush UV
             // derivation:
