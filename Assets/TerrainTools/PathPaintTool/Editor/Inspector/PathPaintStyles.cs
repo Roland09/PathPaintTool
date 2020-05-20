@@ -50,12 +50,27 @@ namespace UnityEditor.Experimental.TerrainAPI
         {
             buttonNormalStyle = "Button";
             buttonActiveStyle = new GUIStyle("Button");
-            buttonActiveStyle.normal.background = buttonNormalStyle.active.background;
+
+            // buttonActiveStyle.normal.background = buttonNormalStyle.active.background; // this doesn't work in 2019.3 anymore, no pressed/dark background
+            buttonActiveStyle.normal.background = CreateColorPixel(new Color(0.7f, 0.7f, 0.7f, 1f));
         }
 
         public static GUIStyle GetButtonToggleStyle(bool isToggled)
         {
             return isToggled ? buttonActiveStyle : buttonNormalStyle;
+        }
+
+        /// <summary>
+        /// Creates a 1x1 texture
+        /// </summary>
+        /// <param name="Background">Color of the texture</param>
+        /// <returns></returns>
+        internal static Texture2D CreateColorPixel(Color color)
+        {
+            Texture2D retTex = new Texture2D(1, 1);
+            retTex.SetPixel(0, 0, color);
+            retTex.Apply();
+            return retTex;
         }
     }
 }
