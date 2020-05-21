@@ -57,5 +57,10 @@ namespace UnityEditor.Experimental.TerrainAPI
             }
 #endif
         }
+
+        public override void OnPaintFinished()
+        {
+            // not implemented yet. if you need it, see VegetationStudioProIntegration.cs
+        }
     }
 }

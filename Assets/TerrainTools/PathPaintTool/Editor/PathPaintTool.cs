@@ -59,6 +59,8 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         #endregion BrushSettings
 
+        private bool onPaintFinishedRequired = false;
+
         public PathPaintTool()
         {
 
@@ -243,6 +245,35 @@ namespace UnityEditor.Experimental.TerrainAPI
             else if (evt.type == EventType.MouseUp)
             {
                 isBrushResizing = false;
+            }
+
+            // handle onPaintFinishedRequired flag depending on whether we were painting or not
+            switch (evt.GetTypeForControl(controlId))
+            {
+                // flag that onPaintFinished is required
+                case EventType.MouseDown:
+
+                    if (evt.button == 0 && evt.isMouse)
+                    {
+                        onPaintFinishedRequired = true;
+                    }
+                    break;
+
+                // perform onPaintFinished if required and invalidate the flag for that information
+                case EventType.MouseUp:
+
+                    if (evt.button == 0 && evt.isMouse)
+                    {
+                        // Perform OnPaintFinished on the integrations which implement it
+                        if (onPaintFinishedRequired)
+                        {
+                            PerformIntegrationOnPaintFinished();
+                        }
+
+                        onPaintFinishedRequired = false;
+                    }
+                    break;
+
             }
 
             // We're only doing painting operations, early out if it's not a repaint
@@ -493,8 +524,31 @@ namespace UnityEditor.Experimental.TerrainAPI
 
                 vegetationStudioProIntegration.Update(segments, editContext);
             }
+        }
+
+        /// <summary>
+        /// Perform OnPaintFinished on the integrations which implement it
+        /// Example: Vegetation System Refresh for VS Pro
+        /// </summary>
+        private void PerformIntegrationOnPaintFinished()
+        {
+
+            // integreation calls are redundant if the system isn't active.
+            // but this way we can move the #if-endif clauses to a dedicated class and don't
+            // have to clutter the main class. another option might be to have a dedicated
+            // integraction checker class and return a list of what's active and what not.
+            // we'll see how it develops
+
+            foreach (AssetIntegration asset in assetIntegrations)
+            {
+                if (!asset.Active)
+                    continue;
+
+                vegetationStudioProIntegration.OnPaintFinished();
+            }
 
         }
+
         #endregion Integrations
 
         /// <summary>

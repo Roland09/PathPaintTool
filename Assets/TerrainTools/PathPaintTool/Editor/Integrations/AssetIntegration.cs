@@ -23,5 +23,11 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         public abstract void Update(StrokeSegment[] segments, IOnPaint editContext);
 
+        /// <summary>
+        /// Will be performed once after the painting is finished.
+        /// Example usage: Update the entire vegetation system of vegetation studio pro
+        /// </summary>
+        public abstract void OnPaintFinished();
+
     }
 }
