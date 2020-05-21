@@ -295,7 +295,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             {
                 #region General Notification
 
-                EditorGUILayout.HelpBox("Please note that Undo isn't implemented yet. Better backup your terrain before you perform any modifications.", MessageType.Info);
+                EditorGUILayout.HelpBox("Please note that Undo isn't fully working yet. Better backup your terrain before you perform any modifications.", MessageType.Info);
 
                 #endregion General Notification
 
