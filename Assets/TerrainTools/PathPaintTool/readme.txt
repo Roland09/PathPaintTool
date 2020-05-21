@@ -34,6 +34,15 @@ Credit to these providers:
 
 Version History
 -------------------------------------
+* 1.00
+   
+  + created 2019.3 version
+
+  changes in 2019.3 version:
+
+	  + implemented undo for textures combined with height map changes. there are still rare cases where it doesn't seem to work fully, so better backup your terrain
+	  + using full vegetation system refresh for vs pro after painting is finished
+
 * 0.04
   
   + bugfix: moved Utilities folder to Editor, otherwise the build wouldn't compile
