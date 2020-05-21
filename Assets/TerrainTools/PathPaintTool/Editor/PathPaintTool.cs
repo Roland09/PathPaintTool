@@ -61,6 +61,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         public PathPaintTool()
         {
+
             #region Modules
 
             // register available modules
@@ -127,6 +128,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             pathRecorder = new PathRecorder();
 
             #endregion PathRecorder
+
         }
 
         public override string GetName()
@@ -282,6 +284,13 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         public override void OnInspectorGUI(Terrain terrain, IOnInspectorGUI editContext)
         {
+            // ensure the button styles are initialized
+            // there seems to be a problem which first got noticed in 2019.3. OnInspectorGUI is invoked, the PathPaintStyles.GetButtonToggleStyle invoked, but the styles
+            // in there weren't initialized in the static constructor. this is just a quick workaround, will examine this later
+            // see also https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors
+            // easily reproducable: happened every time the scene got loaded new
+            PathPaintStyles.Init();
+
             EditorGUI.BeginChangeCheck();
             {
                 #region General Notification

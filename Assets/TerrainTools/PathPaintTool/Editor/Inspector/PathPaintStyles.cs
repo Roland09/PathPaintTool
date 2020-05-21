@@ -6,6 +6,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 {
     public class PathPaintStyles
     {
+
         #region BrushSettings
         public static readonly GUIContent brushSizeStyle = EditorGUIUtility.TrTextContent("Brush Size", "Size of the brush used to paint.");
         public static readonly GUIContent brushOpacityStyle = EditorGUIUtility.TrTextContent("Opacity", "Strength of the applied effect.");
@@ -48,10 +49,15 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         static PathPaintStyles()
         {
-            buttonNormalStyle = "Button";
-            buttonActiveStyle = new GUIStyle("Button");
+            Init();
+        }
 
-            // buttonActiveStyle.normal.background = buttonNormalStyle.active.background; // this doesn't work in 2019.3 anymore, no pressed/dark background
+        public static void Init()
+        {
+            buttonNormalStyle = "Button";
+
+            buttonActiveStyle = new GUIStyle("Button");
+            //buttonActiveStyle.normal.background = buttonNormalStyle.active.background; // this doesn't work in 2019.3 anymore, no pressed/dark background
             buttonActiveStyle.normal.background = CreateColorPixel(new Color(0.7f, 0.7f, 0.7f, 1f));
         }
 
