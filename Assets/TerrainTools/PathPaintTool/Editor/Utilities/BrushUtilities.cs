@@ -8,55 +8,6 @@ namespace UnityEditor.Experimental.TerrainAPI
     public static class BrushUtilities
     {
 
-        // This maintains the list of terrains we have touched in the current operation (and the current operation identifier, as an undo group)
-        // We track this to have good cross-tile undo support: each modified tile should be added, at most, ONCE within a single operation
-        private static int s_CurrentOperationUndoGroup = -1;
-        private static List<UnityEngine.Object> s_CurrentOperationUndoStack = new List<UnityEngine.Object>();
-
-        static BrushUtilities()
-        {
-            /*
-            PaintContext.onTerrainTileBeforePaint += (tile, action, editorUndoName) =>
-            {
-                // if we are in a new undo group (new operation) then start with an empty list
-                if (Undo.GetCurrentGroup() != s_CurrentOperationUndoGroup)
-                {
-                    s_CurrentOperationUndoGroup = Undo.GetCurrentGroup();
-                    s_CurrentOperationUndoStack.Clear();
-                }
-
-                if (tile == null || string.IsNullOrEmpty(editorUndoName))
-                    return;
-
-                if (!s_CurrentOperationUndoStack.Contains(tile.terrain))
-                {
-                    s_CurrentOperationUndoStack.Add(tile.terrain);
-                    var undoObjects = new List<UnityEngine.Object>();
-                    undoObjects.Add(tile.terrain.terrainData);
-                    if (0 != (action & PaintContext.ToolAction.PaintTexture))
-                        undoObjects.AddRange(tile.terrain.terrainData.alphamapTextures);
-                    Undo.RegisterCompleteObjectUndo(undoObjects.ToArray(), editorUndoName);
-                }
-            };
-            */
-        }
-
-        internal static void UpdateTerrainDataUndo(TerrainData terrainData, string undoName)
-        {
-            // if we are in a new undo group (new operation) then start with an empty list
-            if (Undo.GetCurrentGroup() != s_CurrentOperationUndoGroup)
-            {
-                s_CurrentOperationUndoGroup = Undo.GetCurrentGroup();
-                s_CurrentOperationUndoStack.Clear();
-            }
-
-            if (!s_CurrentOperationUndoStack.Contains(terrainData))
-            {
-                s_CurrentOperationUndoStack.Add(terrainData);
-                Undo.RegisterCompleteObjectUndo(terrainData, undoName);
-            }
-        }
-
         public static void ShowDefaultPreviewBrush(Terrain terrain, Texture brushTexture, float brushSize)
         {
             Ray mouseRay = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
