@@ -21,7 +21,7 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         public abstract string GetName();
 
-        public abstract void Update(StrokeSegment[] segments);
+        public abstract void Update(StrokeSegment[] segments, IOnPaint editContext);
 
     }
 }

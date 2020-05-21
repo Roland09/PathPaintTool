@@ -491,7 +491,7 @@ namespace UnityEditor.Experimental.TerrainAPI
                 if (!asset.Active)
                     continue;
 
-                vegetationStudioProIntegration.Update(segments);
+                vegetationStudioProIntegration.Update(segments, editContext);
             }
 
         }

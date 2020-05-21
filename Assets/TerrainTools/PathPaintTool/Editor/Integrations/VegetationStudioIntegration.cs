@@ -25,20 +25,31 @@ namespace UnityEditor.Experimental.TerrainAPI
             return "Vegetation Studio";
         }
 
-        public override void Update(StrokeSegment[] segments)
+        public override void Update(StrokeSegment[] segments, IOnPaint editContext)
         {
 #if VEGETATION_STUDIO
 
             if (segments.Length > 0)
             {
                 StrokeSegment segment = segments[0];
-                Bounds bounds = new Bounds(new Vector3(segment.currUV.x, 0, segment.currUV.y), Vector3.zero); ;
+
+                Vector3 brushBounds = new Vector3(editContext.brushSize, editContext.brushSize, editContext.brushSize);
+
+                Vector2 center2D = TransformUtilities.transformToWorld(segment.currTerrain, segment.currUV);
+                Vector3 center = new Vector3(center2D.x, 0, center2D.y);
+
+                Bounds bounds = new Bounds( center, brushBounds);
+
                 for (int i = 1; i < segments.Length; i++)
                 {
                     segment = segments[i];
 
-                    Vector2 boundsWS = TransformUtilities.transformToWorld(segment.currTerrain, segment.currUV);
-                    bounds.Encapsulate(new Vector3(boundsWS.x, 0, boundsWS.y));
+                    Vector2 center2DNext = TransformUtilities.transformToWorld(segment.currTerrain, segment.currUV);
+                    Vector3 centerNext = new Vector3(center2DNext.x, 0, center2DNext.y);
+
+                    Bounds boundsNext = new Bounds(centerNext, brushBounds);
+
+                    bounds.Encapsulate( boundsNext);
                 }
 
                 VegetationStudioManager.RefreshTerrainHeightMap(bounds);
