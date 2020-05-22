@@ -114,7 +114,7 @@ namespace UnityEditor.Experimental.TerrainAPI
             Graphics.Blit(paintContext.sourceRenderTexture, paintContext.destinationRenderTexture, mat, (int)TerrainPaintUtility.BuiltinPaintMaterialPasses.PaintTexture);
 
             // custom Undo. otherwise undo of mixing texture paint and terrain modification won't work
-            BrushUndo.RegisterUndo( terrain, paintContext, "Terrain Paint - Texture(Custom Undo)");
+            BrushUndo.RegisterUndo( terrain, paintContext, "PathPaintTool");
 
             // no undo, we have our own
             TerrainPaintUtility.EndPaintTexture(paintContext, null);

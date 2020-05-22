@@ -116,7 +116,11 @@ namespace UnityEditor.Experimental.TerrainAPI
             TerrainPaintUtility.SetupTerrainToolMaterialProperties(paintContext, brushXform, mat);
             Graphics.Blit(paintContext.sourceRenderTexture, paintContext.destinationRenderTexture, mat, 0);
 
-            TerrainPaintUtility.EndPaintHeightmap(paintContext, "Terrain Paint - Ridge Erode");
+            // custom Undo. otherwise undo of mixing texture paint and terrain modification won't work
+            BrushUndo.RegisterUndo(terrain, paintContext, "PathPaintTool");
+
+            // no undo, we have our own
+            TerrainPaintUtility.EndPaintHeightmap(paintContext, null);
 
             return true;
         }

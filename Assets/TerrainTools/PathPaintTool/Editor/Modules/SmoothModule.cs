@@ -105,7 +105,11 @@ namespace UnityEditor.Experimental.TerrainAPI
 
             Graphics.Blit(paintContext.sourceRenderTexture, paintContext.destinationRenderTexture, mat, (int)TerrainPaintUtility.BuiltinPaintMaterialPasses.SmoothHeights);
 
-            TerrainPaintUtility.EndPaintHeightmap(paintContext, "Terrain Paint - Smooth Height");
+            // custom Undo. otherwise undo of mixing texture paint and terrain modification won't work
+            BrushUndo.RegisterUndo(terrain, paintContext, "PathPaintTool");
+
+            // no undo, we have our own
+            TerrainPaintUtility.EndPaintHeightmap(paintContext, null);
 
             return true;
         }
