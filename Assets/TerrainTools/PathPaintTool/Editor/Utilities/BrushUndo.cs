@@ -55,19 +55,23 @@ namespace UnityEditor.Experimental.TerrainAPI
 
         public static void RegisterUndo( Terrain terrain, PaintContext paintContext, string editorUndoName)
         {
+            // register all affected terrains
+            for( int i=0; i < paintContext.terrainCount; i++)
+            {
+                PaintContext.ITerrainInfo terrainInfo = TerrainTile.Make(
+                   paintContext.GetTerrain(i),
+                   paintContext.pixelRect.x,
+                   paintContext.pixelRect.y,
+                   paintContext.pixelRect,
+                   paintContext.destinationRenderTexture.width,
+                   paintContext.destinationRenderTexture.height);
 
-            PaintContext.ITerrainInfo terrainInfo = TerrainTile.Make(
-               terrain,
-               paintContext.pixelRect.x,
-               paintContext.pixelRect.y,
-               paintContext.pixelRect,
-               paintContext.destinationRenderTexture.width,
-               paintContext.destinationRenderTexture.height);
-
-            // using custom undo including texture, otherwise painting wouldn't be registered
-            // might as well change the code in the onTerrainTileBeforePaint event handler
-            //onTerrainTileBeforePaint?.Invoke(terrainInfo, ToolAction.PaintHeightmap, editorUndoName);
-            onTerrainTileBeforePaint?.Invoke(terrainInfo, ToolAction.PaintTexture, editorUndoName);
+                // using custom undo including texture, otherwise painting wouldn't be registered
+                // might as well change the code in the onTerrainTileBeforePaint event handler
+                //onTerrainTileBeforePaint?.Invoke(terrainInfo, ToolAction.PaintHeightmap, editorUndoName);
+                onTerrainTileBeforePaint?.Invoke(terrainInfo, ToolAction.PaintTexture, editorUndoName);
+            }
+            
 
         }
 
