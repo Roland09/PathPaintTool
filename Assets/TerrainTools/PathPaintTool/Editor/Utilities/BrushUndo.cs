@@ -64,7 +64,9 @@ namespace UnityEditor.Experimental.TerrainAPI
                paintContext.destinationRenderTexture.width,
                paintContext.destinationRenderTexture.height);
 
-            //onTerrainTileBeforePaint?.Invoke(terrainInfo, ToolAction.PaintHeightmap, editorUndoName);  // TODO: below is only for texture
+            // using custom undo including texture, otherwise painting wouldn't be registered
+            // might as well change the code in the onTerrainTileBeforePaint event handler
+            //onTerrainTileBeforePaint?.Invoke(terrainInfo, ToolAction.PaintHeightmap, editorUndoName);
             onTerrainTileBeforePaint?.Invoke(terrainInfo, ToolAction.PaintTexture, editorUndoName);
 
         }
